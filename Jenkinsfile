@@ -20,6 +20,11 @@ node () {
 		// JUnit Results
 		junit '**/target/surefire-reports/*.xml' 
 	}
+	stage('Quality check') {
+  		withSonarQubeEnv('Sonar') {
+	 	 bat "mvn sonar:sonar"
+   		}
+	}
 	stage ('App-IC - Post build actions') {
 /*
 Please note this is a direct conversion of post-build actions. 
@@ -27,7 +32,7 @@ It may not necessarily work/behave in the same way as post-build actions work.
 A logic review is suggested.
 */
 		// Mailer notification
-		step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'badr.nasslahsen@gmail.com', sendToIndividuals: false])
+		step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'chanbadi31@gmail.com', sendToIndividuals: false])
  
 	}
 }
